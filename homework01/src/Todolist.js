@@ -27,6 +27,9 @@ export default class Todolist extends Component {
             todonum:n1,
             donenum:n2
         }
+        window.onload= function(){
+            document.getElementById('in').focus();
+        }
     }
 
     addItem = (msg)=>{

@@ -15,13 +15,16 @@ export default class Todoinput extends Component {
         if(e.keyCode === 13){
             this.props.addTodo(obj);
         }
+        
     }
+  
     render() {
         return (
             <div id='header'>
             <form>
                 <label htmlFor="inp">ToDoList</label>
-                <input name = "n" required autoComplete="off" value={this.state.n} onKeyDown={this.handleInput} placeholder="添加ToDo" type="text"/>
+                <input id='hiddeninput' type="hidden"/>
+                <input id="in" name = "n" required autoComplete="off" value={this.state.n} onKeyDown={this.handleInput} placeholder="添加ToDo" type="text"/>
             </form>
             </div>
         )
