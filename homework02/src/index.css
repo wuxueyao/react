@@ -1,0 +1,153 @@
+@import '~antd/dist/antd.css'; 
+/* 下载插件 */
+*{
+	padding: 0;
+	margin: 0;
+}
+body{
+	margin: 0;
+	padding: 0;
+	background: #e1e1e1;
+}
+ul,li{
+	list-style: none;
+}
+/* header */
+.headerwrap{
+	height: 50px;
+	background: #444;
+}
+.headerwrap header{
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.headerwrap img{
+	width: 120px;
+}
+.headerwrap a{
+	padding: 10px 15px;
+	cursor:pointer;
+	text-shadow: none;
+	color: #ccc;
+	
+}
+.headerwrap a:hover{
+	color: #fff;
+	
+}
+
+/* main */
+.main{
+	width: 1200px;
+	height: 100%;
+	overflow: hidden;
+	margin: 30px auto;
+	/* 上下30，左右居中 */
+}
+.content{
+	width: 900px;
+	min-height: 1593px;
+	/* height: 2100px; */
+	float: left;
+	background: #fff;
+	overflow: hidden;
+	margin-bottom: 200px;
+}
+.contentheader{
+	width: 100%;
+	height: 40px;
+	background: #f6f6f6;
+}
+
+.sider{
+	width: 290px;
+	float: right;
+	background: #e1e1e1;
+}
+.white{
+	margin-bottom: 10px;
+	background: #fff;
+	font-size: 13px;
+}
+.one{
+	padding: 10px;
+	color: #333;
+}
+.one span{
+	color: #778087;
+	cursor: pointer;
+}
+.one li{
+	width: 160px;
+	height: 34px;
+	padding-top: 4px;
+	text-align: center;
+	font-size: 14px;
+	background: #5bc0de;
+	cursor:pointer;
+	color: #fff;
+	border-radius: 5px;
+
+}
+.two{
+	padding: 10px 10px 0 10px;
+}
+.two img{
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.three{
+	padding: 0;
+}
+.white_header{
+	background: #f6f6f6;
+	line-height: 40px;
+	padding-left: 10px;
+	width: 290px;
+	height: 40px;
+	color: #444;
+}
+.white_inner ol{
+	color: #778087;
+	padding: 10px;
+}
+.white_inner ol li{
+	line-height: 30px;
+	cursor: pointer;
+}
+.white_inner ol img{
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.white_code{
+	padding: 10px;
+	text-align: center;
+}
+.white_inner ol li span{
+	width: 40px;
+	margin-right: 10px;
+}
+.footer{
+	width: 100%;
+	margin-top: 15px;
+	float: left;
+	background: #fff;
+	height: 190px;
+}
+.footer_content{
+	width: 1200px;
+	margin: 20px auto;
+}
+.footer_content ol{
+	color: #666;
+}
+.footer_content ol li{
+	margin: 10px auto;
+	color: #ababab;
+}
+.contentheader a:active{
+	background:#80bd01;
+	padding: 3px 4px;
+	color: #fff;
+}

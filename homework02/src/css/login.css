@@ -1,0 +1,50 @@
+.login_inner{
+    padding: 10px;
+    border-radius: 0 0 3px 3px;
+    line-height: 2em;
+    border-radius: 0 0 3px 3px;
+}
+.login_inner form{
+    padding-right: 380px;
+    text-align: right;
+    margin-top: 40px;
+}
+.login_inner label{
+    width: 160px;
+    height: 25px;
+    margin: 0 0 5px;
+    padding-right: 20px;
+    color: #333;
+    font-size: 14px;
+}
+.inp{
+    font-size: 14px;
+    word-break: break-word;
+    padding: 4px 6px;
+    width: 284px;
+    height: 30px;
+    margin-bottom: 30px;
+}
+.inp:focus{
+    background: hsla(0,0%,0%,0);
+    box-shadow: 0 0 2px rgba(60,60,60,.5);
+    touch-action: manipulation;
+}
+.login_inner form a{
+    text-align: center;
+    display: block;
+    width: 280px;
+    height: 40px;
+    background: #0088cc;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 10px;
+    border: none;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    letter-spacing: 2px;
+    border-radius: 3px;
+    line-height: 2em;
+    float: right;
+    margin: 0;
+}
