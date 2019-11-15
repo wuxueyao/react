@@ -1,0 +1,48 @@
+
+.mall_inp{
+    width: 100%;
+    position: absolute; 
+    top: 100%; 
+    padding: 2% 4%;
+    z-index: 100;
+    background-color:rgba(0, 0, 0, 0.3);
+}
+.mall_inp input{
+    border-radius:5px;
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    background-color: #fff;
+    opacity: 0.7;
+}
+.mall_mini{
+    margin-top:0 ;
+    background: #fff;
+    padding: 5% 2%;
+}
+.grid_img{
+    text-align: center;
+    margin: 0 auto;
+    width: 62%;
+    border-radius: 60%;
+    padding: 8% 6%;
+}
+.mall_third{
+    padding-left: 3.5%;
+    padding-right: 3%;
+}
+.mall_room{
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+}
+.mall_room img{
+    width: 100%;
+}
+.mall_p1{
+    color: #686868;
+    font-size: 3.1vw;
+}
+.mall_p2{
+    color: #000;
+    font-size: 3.5vw;
+}

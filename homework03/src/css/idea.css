@@ -1,0 +1,40 @@
+.idea_line{
+    width: 100%;
+    height: auto;
+    padding: 2% 4%;
+}
+.idea_room{
+    border-radius: 6%;
+    width: 100%;
+    background: #fff;
+}
+.idea_room img{
+    border-radius: 6% 6% 0 0;
+    width: 100%;
+}
+.mini_pic{
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+    color: #828282;
+    padding-right: 2%;
+}
+.mini_pic img{
+    width: 45px;
+    height: 45px;
+    margin-top:-5%;
+    margin-left: 1%;
+    border-radius:60%
+}
+.mini_pic span{
+    margin-left: 5%;
+    font-size: 2vh;
+}
+.mini_pic i{
+    float: right;
+    line-height: 20px;
+    color: #e74451;
+    font-size: 3vh;
+    margin-top: 5%;
+
+}

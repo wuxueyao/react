@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "static/css/main.947b6d2e.chunk.css",
+    "main.js": "static/js/main.0c88dc68.chunk.js",
+    "main.js.map": "static/js/main.0c88dc68.chunk.js.map",
+    "runtime-main.js": "static/js/runtime-main.b8a4ca10.js",
+    "runtime-main.js.map": "static/js/runtime-main.b8a4ca10.js.map",
+    "static/css/2.6f60e7f3.chunk.css": "static/css/2.6f60e7f3.chunk.css",
+    "static/js/2.8a9e8379.chunk.js": "static/js/2.8a9e8379.chunk.js",
+    "static/js/2.8a9e8379.chunk.js.map": "static/js/2.8a9e8379.chunk.js.map",
+    "index.html": "index.html",
+    "precache-manifest.ae36a6bb7e809da953464d002538e062.js": "precache-manifest.ae36a6bb7e809da953464d002538e062.js",
+    "service-worker.js": "service-worker.js",
+    "static/css/2.6f60e7f3.chunk.css.map": "static/css/2.6f60e7f3.chunk.css.map",
+    "static/css/main.947b6d2e.chunk.css.map": "static/css/main.947b6d2e.chunk.css.map",
+    "static/media/clock.png": "static/media/clock.6656b00c.png",
+    "static/media/cup.png": "static/media/cup.0eda9309.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b8a4ca10.js",
+    "static/css/2.6f60e7f3.chunk.css",
+    "static/js/2.8a9e8379.chunk.js",
+    "static/css/main.947b6d2e.chunk.css",
+    "static/js/main.0c88dc68.chunk.js"
+  ]
+}
