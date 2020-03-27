@@ -1,3 +1,5 @@
+# TypeScript 总结
+
 ### 接口(interface)：
 - 描述一个对象的取值规范，不实现具体的对象
 - 作用：
@@ -115,6 +117,128 @@
         square.sideLength = 10;
         ``` 
 ---
+### 类(class)：
+- 类是用来创造对象的。
+1. 定义类：
+    - 使用class定义类，使用constructor定义构造函数。通过new实例化对象后，会自动调用构造函数。
+    - ```javascript
+        /**
+         * 1.类的定义
+        */
+        class Person {
+            public name: string;//属性
+            constructor(name: string) {//构造函数 实例化类的时候触发的方法 
+                this.name = name;
+            }
+            public printMsg() {
+                console.log(`my name is ${this.name}`)
+            }
+        }
+        var person=new Person('张三');
+        person.printMsg() //my name is 张三
+        ```
+2. 静态属性和静态方法：
+    - static修饰符修饰的属性是静态属性
+    - static修饰符修饰的方法称为静态方法，不需要实例化，不会被实例继承，直接通过类来调用
+3. 继承：
+    - extends、super
+    - extends和implement的区别
+        - extends是继承父类，只要类的声明不是final或者类定义为abstract就能继承
+        - implement是用来实现接口
+        - 继承只能继承一个类，而实现接口则可以实现多个，只需用逗号分开即可
+        - 父类的方法和子类的方法一致时，子类会替换父类
+    - ```javascript
+        /**
+         * 2.类的继承
+        */
+        class Person{
+            name:string;
+            constructor(name:string){
+                this.name=name;
+            }
+            run():string{
+                return `${this.name}在运动`
+            }
+        }
+        class Student extends Person{
+            constructor(name:string){
+                super(name);  /*初始化父类的构造函数*/
+            }
+        }
+        var s=new Student('李四');
+        console.log(s.run()) //李四在运动
+        ```
+    - 多态：
+        - 父类定义一个方法不去实现，让继承他的子类去实现，每一个子类有不同的表现，多态属于继承
+        - ```javascript
+            /**
+             * 多态
+            */
+            class Animal{
+                name:string
+                constructor(name:string){
+                    this.name
+                }
+                /* 具体吃什么不知道，具体吃什么继承它的子类去实现，
+                每一个子类的表现不一样 */
+                eat(){
+                    console.log('吃的方法')
+                }
+            }
+            class Dog extends Animal{
+                constructor(name:string){
+                    super(name);
+                }
+                eat(){
+                    console.log(`${this.name}吃骨头`)
+                }
+            }
+            class Cat extends Animal{
+                constructor(name:string){
+                    super(name);
+                }
+                eat(){
+                    console.log(`${this.name}吃鱼`)
+                }
+            }
+            ```
+4. 访问修饰符：
+    - public :公有 在当前类里面、 子类 、类外面都可以访问
+    - protected：保护类型 在当前类里面、子类里面可以访问 ，在类外部没法访问
+    - private ：私有 在当前类里面可以访问，子类、类外部都没法访问
+    - 属性如果不加修饰符，默认是public
+5. 抽象类：
+    - 提供其他类继承的基类，不能直接被实例化
+    - 用abstract关键字定义抽象类和抽象方法
+    - 抽象类中的抽象方法不包含具体实现并且必须在派生类中实现
+    - abstract抽象方法只能放在抽象类里面
+    - ```javascript
+        /**
+         * 5.抽象类
+        */
+        abstract class Animal{
+            public name:string;
+            constructor(name:string){
+                this.name=name;
+            }
+            abstract eat():any;  //抽象方法不包含具体实现并且必须在派生类中实现。
+            run(){
+                console.log('其他方法可以不实现')
+            }
+        }
+        class Dog extends Animal{
+            //抽象类的子类必须实现抽象类里面的抽象方法
+            constructor(name:any){
+                super(name)
+            }
+            eat(){
+                console.log(this.name+'吃狗粮')
+            }
+        }
+        var d=new Dog('小花花');
+        d.eat(); //小花花吃狗粮
+        ```
+---
 ### 泛型(Generics)：
 - 指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性。
 - 之所以叫泛型，是因为能够作用于一系列类型，是在具体类型上的一层抽象
@@ -196,25 +320,90 @@
 ### 装饰器
 - 装饰器是一种特殊类型的声明，它能够被附加到类声明、方法、属性或参数上。 
 - 装饰器使用@expression这种形式，expression求值后必须为一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。
+- 装饰器其实就是一个函数，在函数里可以写一些新的逻辑，包裹后面修饰的内容，将新的逻辑传递到被修饰的内容中去
+- 高阶组件 -- 其实就是一个函数，就是装饰器
+- @expression语法其实就是语法糖
+- 配置：
+    ```
+    yarn add -D @babel/plugin-proposal-decorators
+
+    //添加配置
+    // 创建 .babelrc 文件
+    {
+        "presets": ["module:metro-react-native-babel-preset"],
+        "plugins":[["@babel/plugin-proposal-decorators", { "legacy": true }]]
+    }
+
+    // tsconfig.json中添加 "experimentalDecorators": true
+    {
+        "compilerOptions": {
+            "target": "ES5",
+            "experimentalDecorators": true
+        }
+    }
+    ```
 - 作用：
     - 在不修改原有对象或者接口的情况下，让其表现得更好。
-1. 类装饰器
-    - ```javascript
+-  普通装饰器（无参数）：
+    - - ```javascript
         
+        ``` 
+-  定义装饰器：
+    - 装饰器本身其实是一个函数，理论上忽略参数的话，任何函数都可以当做装饰器使用。
+    - 普通装饰器（无法传参，本身是装饰器）：
+        - ```javascript
+        ``` 
+    - 装饰器工厂（带参数的装饰器，返回的是装饰器）：
+        - ```javascript
+        ``` 
+1. 属性装饰器
+    - 属性装饰器表达式会在运行时当作函数被调用，传入下列2个参数：
+        - 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象
+        - 成员的名字
+    - ```javascript
+        /**
+         * 1.属性装饰器
+        */
+        function DefaultValue(value: string) {
+            return function (target: any, propertyName: string) {
+                target[propertyName] = value;
+            }
+        }
+        class Hello {
+            @DefaultValue("world") greeting: string;
+        }
+        console.log(new Hello().greeting);// 输出: world
         ``` 
 2. 方法装饰器
+    - 它会被应用到方法的 属性描述符上，可以用来监视，修改或者替换方法定义
+    - 方法装饰会在运行时传入下列3个参数:
+        - 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
+        - 成员的名字。
+        - 成员的属性描述符。
     - ```javascript
         
         ``` 
-3. 属性装饰器
+3. 参数装饰器
     - ```javascript
         
         ``` 
-4. 参数装饰器
+4. 类装饰器
     - ```javascript
         
         ``` 
-5. 装饰器组合
+
+5. 访问器装饰器
+    - 访问器装饰器应用于访问器的属性描述符，可用于观察，修改或替换访问者的定义。 访问器装饰器不能在声明文件中使用，也不能在任何其他环境上下文中使用（例如在声明类中）。
+    - TypeScript不允许为单个成员装饰get和set访问器。相反，该成员的所有装饰器必须应用于按文档顺序指定的第一个访问器。这是因为装饰器适用于属性描述符，它结合了get和set访问器，而不是单独的每个声明。
+    - 访问器装饰器表达式会在运行时当作函数被调用，传入下列3个参数：
+        - 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象
+        - 成员的名字
+        - 成员的属性描述符
+        - 如果访问器装饰器返回一个值，它会被用作方法的属性描述符
+    - ```javascript
+        
+        ``` 
+- 装饰器组合
     - ```javascript
         
         ``` 
