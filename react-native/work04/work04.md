@@ -317,7 +317,7 @@
 
 ---
 
-### 装饰器
+### 装饰器(Decorators)：
 - 装饰器是一种特殊类型的声明，它能够被附加到类声明、方法、属性或参数上。 
 - 装饰器使用@expression这种形式，expression求值后必须为一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。
 - 装饰器其实就是一个函数，在函数里可以写一些新的逻辑，包裹后面修饰的内容，将新的逻辑传递到被修饰的内容中去
@@ -343,23 +343,55 @@
     }
     ```
 - 作用：
+    - 为我们在类的声明及成员上通过元编程语法添加标注提供了一种方式
     - 在不修改原有对象或者接口的情况下，让其表现得更好。
--  普通装饰器（无参数）：
-    - - ```javascript
-        
-        ``` 
 -  定义装饰器：
     - 装饰器本身其实是一个函数，理论上忽略参数的话，任何函数都可以当做装饰器使用。
-    - 普通装饰器（无法传参，本身是装饰器）：
-        - ```javascript
+    - 普通装饰器（无参数，本身是装饰器）：
+        ```javascript
+        /**
+         * 普通装饰器
+        */
+        function helloWord(target: any) {
+            console.log('hello Word!');
+        }
+        // 装饰器和后边的不加分号，因为是装饰后边的，是连在一起的
+        @helloWord
+        class HelloWordClass {
+            sayHello(){
+            }
+        }
         ``` 
     - 装饰器工厂（带参数的装饰器，返回的是装饰器）：
-        - ```javascript
+        ```javascript
+        /**
+         * 装饰器工厂 
+        */
+        function addUrl(url:string){
+            //这是装饰器工厂
+            return function(target:any){ 
+                //这才是装饰器
+                target.prototype.url = url;
+            }
+        }
+
+        @addUrl('http://www.baidu.com')
+        class HomeServer{
+            url:string|undefined;
+            getData(){
+                console.log(this.url)
+                // 虽然这里没有写url，但是装饰器函数里边写了，所以有
+            }
+        }
+        let home = new HomeServer();
+        home.getData()
         ``` 
 1. 属性装饰器
     - 属性装饰器表达式会在运行时当作函数被调用，传入下列2个参数：
         - 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象
         - 成员的名字
+    - 属性装饰器返回的函数会在解释类的对应属性时被调用一次，并可以得到装饰器的参数和被装饰的属性的相关信息。
+    - 装饰器方法的调用只会在加载代码时执行一次，调用被装饰的属性不会触发装饰器方法。
     - ```javascript
         /**
          * 1.属性装饰器
@@ -375,21 +407,83 @@
         console.log(new Hello().greeting);// 输出: world
         ``` 
 2. 方法装饰器
-    - 它会被应用到方法的 属性描述符上，可以用来监视，修改或者替换方法定义
+    - 方法装饰器声明在一个方法的声明之前（紧靠着方法声明）
+    - 它会被应用到方法的属性描述符上，可以用来监视，修改或者替换方法定义
     - 方法装饰会在运行时传入下列3个参数:
         - 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
         - 成员的名字。
         - 成员的属性描述符。
+    - 方法装饰器返回的函数会在解释类的对应方法时被调用一次，并可以得到装饰器的参数和被装饰的方法的相关信息。
+    - 装饰器方法的调用只会在加载代码时执行一次，调用被装饰的方法不会触发装饰器方法。
     - ```javascript
-        
+        /**
+         * 2.方法装饰器
+        */
+        function enumerable(value: boolean) {
+            return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+                // target是类原型对象
+                target.name = 'liu';//在原型上直接加一个属性
+                console.log(propertyKey)
+                console.log(descriptor)
+                descriptor.enumerable = value;
+            };
+        }
+        class Greeter {
+            greeting: string;
+            constructor(message: string) {
+                this.greeting = message;
+            }
+            @enumerable(false)
+            greet() {
+                return "Hello, " + this.greeting;
+            }
+        }
+        console.log(new Greeter('world').name)
         ``` 
 3. 参数装饰器
+    - 参数装饰器表达式会在运行时当作函数被调用，传入下列3个参数：
+        - 对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
+        - 成员的名字。
+        - 参数在函数参数列表中的索引。
+    - 参数装饰器返回的函数会在解释方法的参数时被调用一次，并可以得到参数的相关信息。
+    - 装饰器方法的调用只会在加载代码时执行一次，调用被装饰的参数的方法不会触发装饰器方法。
+    - 参数装饰器只能用来监视一个方法的参数是否被传入
+    - 参数装饰器的返回值会被忽略
     - ```javascript
-        
+        /**
+         * 3.参数装饰器
+        */
+        function logParams(params:any) {
+            console.log(params)  // 装饰器传入的参数：uuid
+            return function(target:any, methodName:any, paramIndex:any) {
+                console.log(target)  // { constructor:f, getData:f } 
+                console.log(methodName)  // getData
+                console.log(paramIndex)  // 0
+            }
+        }
+        class HttpClient {
+            constructor() { }
+            getData(@logParams('uuid') uuid:any) {
+                console.log(uuid);
+            }
+        }
         ``` 
 4. 类装饰器
+    - 类装饰器应用于类构造函数，可以用来监视，修改或替换类定义。
+    - 类的构造函数将作为唯一参数传递给装饰器。
+    - 如果类装饰器返回一个值，它会使用返回的构造函数替换原来的类声明
+    - 通过类装饰器可以对类的原型对象做一定的修改
     - ```javascript
-        
+        /**
+         * 4.类装饰器
+        */
+        function sealed(target: Function) {
+            Object.seal(target);
+            Object.seal(target.prototype);
+        }
+
+        @sealed
+        class Demo {}
         ``` 
 
 5. 访问器装饰器
@@ -400,12 +494,127 @@
         - 成员的名字
         - 成员的属性描述符
         - 如果访问器装饰器返回一个值，它会被用作方法的属性描述符
+    - 访问器装饰器返回的函数会在解释类的对应访问器时被调用一次，并可以得到装饰器的参数和被装饰的访问器的相关信息。
+    - 装饰器方法的调用只会在加载代码时执行一次，调用被装饰的访问器不会触发装饰器方法。
     - ```javascript
-        
+        /**
+         * 5.访问器装饰器
+        * 访问器装饰器（@configurable），应用于Point类的成员上
+        */
+        function configurable(value: boolean) {
+            return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+                descriptor.configurable = value;
+            };
+        }
+        class Point {
+            private _x: number;
+            private _y: number;
+            constructor(x: number, y: number) {
+                this._x = x;
+                this._y = y;
+            }
+
+            @configurable(false)
+            get x() { return this._x; }
+
+            @configurable(false)
+            get y() { return this._y; }
+        }
         ``` 
 - 装饰器组合
-    - ```javascript
-        
-        ``` 
+    - 多个装饰器可以同时应用到被装饰对象上
+    - 当多个装饰器应用在一个声明上时会进行如下步骤的操作：
+        - 由上至下依次对装饰器表达式求值。
+        - 求值的结果会被当作函数，由下至上依次调用
+    - 装饰器加载顺序：
+        ```javascript
+        /**
+         * 装饰器组合简例
+        */
+        function f() {
+            console.log('f求值');
+            return function(target: any) {
+                console.log('f装饰');
+            }
+        }
+        function g() {
+            console.log('g求值');
+            return function(target: any) {
+                console.log('g装饰');
+            }
+        }
+
+        @f()
+        @g()
+        class Demo {
+
+        }
+        //结果：
+        //f求值
+        //g求值
+        //g装饰
+        //f装饰
+        //解析：
+        //因为先求值，所以在上面的f会比g先求值。因为装饰器是由下到上装饰，所以求值后的g比f先执行
+        ```
+        ```javascript
+        /**
+         * 装饰器组合
+        */
+        function ClassDecorator() {
+            return function (target) {
+                console.log("I am class decorator");
+            }
+        }
+        function MethodDecorator() {
+            return function (target, methodName: string, descriptor: PropertyDescriptor) {
+                console.log("I am method decorator");
+            }
+        }
+        function Param1Decorator() {
+            return function (target, methodName: string, paramIndex: number) {
+                console.log("I am parameter1 decorator");
+            }
+        }
+        function Param2Decorator() {
+            return function (target, methodName: string, paramIndex: number) {
+                console.log("I am parameter2 decorator");
+            }
+        }
+        function PropertyDecorator() {
+            return function (target, propertyName: string) {
+                console.log("I am property decorator");
+            }
+        }
+
+        @ClassDecorator()
+        class Hello {
+            @PropertyDecorator()
+            greeting: string;
+            @MethodDecorator()
+            greet( @Param1Decorator() p1: string, @Param2Decorator() p2: string) { }
+        }
+        //输出结果：
+        //I am property decorator
+        //I am parameter2 decorator
+        //I am parameter1 decorator
+        //I am method decorator
+        //I am class decorator
+        ```
+- 小结：
+    - 装饰器提供了对类的属性、方法、入参修改的能力，但是单独靠装饰器是不够的，还要通过注解配合，这样才能动态的修改原来的表现行为。因此我们可以封装一些常用的装饰器方法，达到复用的能力。但要切记，装饰器的行为是发生在编译时
+    - 有多个参数装饰器时：
+        - 从最后一个参数依次向前执行
+        - 方法和方法参数中参数装饰器先执行。
+        - 类装饰器总是最后执行。
+        - 方法和属性装饰器，谁在前面谁先执行。因为参数属于方法一部分，所以参数会一直紧紧挨着方法执行。
+        - 上述例子中如果属性和方法调换位置，则结果输出如下：
+            ```javascript
+            //I am parameter2 decorator
+            //I am parameter1 decorator
+            //I am method decorator
+            //I am property decorator
+            //I am class decorator
+            ```
 
     
